@@ -2,6 +2,7 @@
 #ifndef _BIG_INTEGER_H_
 #define _BIG_INTEGER_H_
 typedef unsigned char UC;
+typedef unsigned long long ULL;
 #include<iostream>
 #include<string>
 template<typename T>
@@ -23,7 +24,7 @@ class BigInteger {
 private:
 	UC* P;
 	UC Signed;
-	unsigned long long count;
+	ULL count;
 	void StringToBCD(std::string str);
 	template <typename T>
 	void GetSigned(T number) {
@@ -65,7 +66,7 @@ public:
 		else if (number[0] == '+') {
 			number = number.substr(1, number.length());
 		}
-		for (unsigned long long i = 0; i < number.length(); i++) {
+		for (ULL i = 0; i < number.length(); i++) {
 			if (number[i] != '0') {
 				number = number.substr(i, number.length());
 				break;
@@ -85,7 +86,7 @@ public:
 		else if (str[0] == '+') {
 			str = str.substr(1, str.length());
 		}
-		for (unsigned long long i = 0; i < str.length(); i++) {
+		for (ULL i = 0; i < str.length(); i++) {
 			if (str[i] != '0') {
 				str = str.substr(i, str.length());
 				break;
@@ -94,6 +95,14 @@ public:
 		reverse(str.begin(), str.end());
 		StringToBCD(str);
 	}
+	BigInteger(const BigInteger& number);
+	~BigInteger();
+	BigInteger& operator=(const BigInteger& number);
+	bool operator==(BigInteger number) const;
+	bool operator>(BigInteger number) const;
+	bool operator<(BigInteger number) const;
+	bool operator>=(BigInteger number) const;
+	bool operator<=(BigInteger number) const;
 	friend std::ostream& operator<<(std::ostream& os, BigInteger& number);
 };
 #endif //_BIG_INTEGER_H_
