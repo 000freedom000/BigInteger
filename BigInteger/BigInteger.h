@@ -4,6 +4,21 @@
 typedef unsigned char UC;
 #include<iostream>
 #include<string>
+template<typename T>
+concept typeLimit = (
+	std::is_same_v<T,unsigned char>||
+	std::is_same_v<T,char>||
+	std::is_same_v<T,unsigned short>||
+	std::is_same_v<T,short>||
+	std::is_same_v<T,unsigned int>||
+	std::is_same_v<T,int>||
+	std::is_same_v<T,unsigned long>||
+	std::is_same_v<T,long>||
+	std::is_same_v<T,unsigned long long>||
+	std::is_same_v<T,long long>||
+	std::is_same_v<T, char const*>||
+	std::is_same_v<T,std::string>
+	);
 class BigInteger {
 private:
 	UC* P;
@@ -33,9 +48,10 @@ private:
 	}
 public:
 	BigInteger();
-	template<typename T>
-	BigInteger(T number) {
-		Signed = GetSigned(number);
+	template<typeLimit T>
+	BigInteger(T number)
+	{
+		GetSigned(number);
 		std::string str = NumberToString(number);
 		StringToBCD(str);
 	}
